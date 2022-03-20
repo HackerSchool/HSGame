@@ -1,0 +1,3 @@
+# HSGAME
+
+Welcome to HSGame!
