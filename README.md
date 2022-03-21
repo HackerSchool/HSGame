@@ -1,3 +1,3 @@
 # HSGAME
 
-Welcome to HSGame!
+Welcome to HSGame! It is a very fun game.
