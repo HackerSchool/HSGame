@@ -8,10 +8,11 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed;
     public Vector3 offset;
+    private Rigidbody2D rigidbodyComponent;
 
     void Start()
     {
-        
+        rigidbodyComponent = GetComponent<Rigidbody2D>();
     }
 
 
@@ -20,9 +21,12 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    void OnMove(InputValue value)
+    void OnJump(InputValue value)
     {
-        offset = value.Get<Vector2>().normalized;
+        float jumpPower = 8f;
+        Debug.Log("saltei");
+        rigidbodyComponent.velocity = Vector2.up * jumpPower;
+        //rigidbodyComponent.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
     }
 
     void FixedUpdate()
