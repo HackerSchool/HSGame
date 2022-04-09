@@ -60,6 +60,12 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.app
+*.exe
+*.dll
+
+# Folders created with builds
+HSGame_Data/
+MonoBleedingEdge/
 
 # Crashlytics generated file
 crashlytics-build.properties
