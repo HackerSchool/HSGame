@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     void OnJump(InputValue value)
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position += speed*Time.deltaTime*offset;
+        transform.position += speed * Time.deltaTime * offset;
     }
 
 }
