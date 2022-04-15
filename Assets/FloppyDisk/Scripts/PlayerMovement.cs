@@ -29,9 +29,12 @@ public class PlayerMovement : MonoBehaviour
         //rigidbodyComponent.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
     }
 
-    void FixedUpdate()
+    void OnCollisionEnter2D(Collision2D other)
     {
-        transform.position += speed * Time.deltaTime * offset;
+        if (other.gameObject.tag == "Obstacle")
+        {
+            Debug.Log("Game Over");
+        }
     }
 
 }
