@@ -26,14 +26,18 @@ public class BackgroundManager : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        // If in transition , waits for the transition background to coincide with the camera and then
+        // loads the next background
         if(inTransition) {
             if(CoincidesWithCamera(transition)) {
                 inTransition = false;
                 finishTransition = true;
-                LoadNextBackground(transition.transform.Find("Linker").gameObject);
+                LoadNextBackground(GetLinker(transition));
             }
         }
 
+        // If the next background has already been loaded (that now is the current), waits for it to coincide with
+        // the current camera and then removes both the transition and previous background from the scene
         else if(finishTransition) {
             if(CoincidesWithCamera(current)) {
                 Destroy(transition);
@@ -47,13 +51,9 @@ public class BackgroundManager : MonoBehaviour
     // Stops the parallax reset from all elements of the current background, finds
     // the element that connects the other background and starts the transition
     public void ChangeBackground() {
-        GameObject linker = null;
-        foreach(Transform t in current.transform) {
-            if(t.gameObject != current) {
-                t.gameObject.GetComponent<Parallax>().resetOn = false;
-                if(t.gameObject.name == "Linker") linker = t.gameObject;
-            }
-        }
+        if(transistions.Count == 0 || backgrounds.Count == 0) return;
+        GameObject linker = GetLinker(current);
+        current.GetComponent<BackgroundData>().TurnOffReset();
         inTransition = true;
         BackgroundTransition(linker);
     }
@@ -83,12 +83,16 @@ public class BackgroundManager : MonoBehaviour
         current.transform.position = Vector3.right*offset;
     }
 
+    // Method that checks if a given background coincides completely with the current camera position
     private bool CoincidesWithCamera(GameObject background) {
-        GameObject g = background.transform.Find("Linker").gameObject;
+        GameObject g = GetLinker(background);
         float dist = cam.transform.position.x - g.transform.position.x;
         return (dist <= 0.1 && dist >= -0.1);
     }
 
+    // Increases the drawing order of the elements in the background.
+    // This means the background sent as argument will be drawn after the previous and therefore
+    // in front of them
     private void ChangeOrderInLayer(GameObject background) {
         foreach(Transform t in background.transform) {
             if(t.gameObject != background) {
@@ -96,5 +100,10 @@ public class BackgroundManager : MonoBehaviour
             }
         }
         sortingOrder++;
+    }
+
+    // Get background element that connects to the transition or next background
+    private GameObject GetLinker(GameObject background) {
+        return background.GetComponent<BackgroundData>().linker;
     }
 }
