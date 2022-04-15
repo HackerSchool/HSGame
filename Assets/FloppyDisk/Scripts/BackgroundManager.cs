@@ -20,7 +20,9 @@ public class BackgroundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        current = Instantiate(backgrounds[index]);
+        if(backgrounds.Count > 0) {
+            current = Instantiate(backgrounds[index]);
+        }
     }
 
     // Update is called once per frame
