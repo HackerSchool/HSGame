@@ -4,19 +4,29 @@ using UnityEngine;
 
 public class ObstacleMovement : MonoBehaviour
 {
-    
-    private Rigidbody2D rigidbodyComponent;
-    
+    public float obstacleSpeed = 5;
+    Rigidbody2D rigidbodyComponent;
+    Collider2D colliderComponent;
+
     void Start()
     {
-        float obstacleSpeed = 5;
         rigidbodyComponent = GetComponent<Rigidbody2D>();
+        colliderComponent = GetComponent<Collider2D>();
         rigidbodyComponent.velocity = Vector2.left * obstacleSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    //Prevents collision with the ground
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Floor")
+        {
+            Physics2D.IgnoreCollision(other.collider, colliderComponent);
+            rigidbodyComponent.velocity = Vector2.left * obstacleSpeed;
+        }
     }
 }

@@ -394,6 +394,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7671019837939490132}
+  - {fileID: 2011606647}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -485,10 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0db2dd0c0ec796468dce295be2d8e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstaclePrefabs:
-  - {fileID: 1383943680939223766, guid: 6093d7949ce668b4689347a0afcb18f6, type: 3}
-  xSpawn: 9
-  xTrigger: 0
+  obstaclePrefab: {fileID: 1383943680939223766, guid: 6093d7949ce668b4689347a0afcb18f6, type: 3}
 --- !u!4 &2011606647
 Transform:
   m_ObjectHideFlags: 0
@@ -496,12 +494,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011606645}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.27756304, y: 0.6717204, z: -0.7101119}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 1186395748}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7671019837939490131
 PrefabInstance:
@@ -515,12 +513,8 @@ PrefabInstance:
       value: Floor
       objectReference: {fileID: 0}
     - target: {fileID: 7671019837231868749, guid: eea5ca19cc3f1de4d90b8e9b8324ddd0, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7671019837231868749, guid: eea5ca19cc3f1de4d90b8e9b8324ddd0, type: 3}
-      propertyPath: m_TagString
-      value: Obstacle
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7671019837231868786, guid: eea5ca19cc3f1de4d90b8e9b8324ddd0, type: 3}
       propertyPath: m_RootOrder

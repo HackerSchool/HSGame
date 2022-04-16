@@ -5,16 +5,16 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public float speed;
-
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.right*speed*Time.deltaTime;
+        transform.position += Vector3.right * speed * Time.deltaTime;
     }
+
 }
