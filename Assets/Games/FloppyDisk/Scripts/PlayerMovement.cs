@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    public float speed;
-    public Vector3 offset;
     private Rigidbody2D rigidbodyComponent;
 
     void Start()
@@ -24,17 +19,24 @@ public class PlayerMovement : MonoBehaviour
     void OnJump(InputValue value)
     {
         float jumpPower = 8f;
-        Debug.Log("saltei");
         rigidbodyComponent.velocity = Vector2.up * jumpPower;
-        //rigidbodyComponent.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Obstacle")
+        if (other.gameObject.tag == "Obstacle" || other.gameObject.tag == "Floor")
         {
             Debug.Log("Game Over");
+            QuitGame();
         }
+    }
+
+    public void QuitGame()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+        Application.Quit();
     }
 
 }
