@@ -15,13 +15,16 @@ public class MainMenu : MonoBehaviour
         
     }
 
-    public void PlayGame1()
+    public void LaunchGame(string game)
     {
-        SceneManager.LoadScene("FloppyDisk");
+        SceneManager.LoadScene(game);
     }
 
     public void Quit()
     {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
         Application.Quit();
     }
 }
