@@ -10,7 +10,6 @@ public class BackgroundManager : MonoBehaviour
     private GameObject current;
     private GameObject transition;
     private GameObject previous = null;
-    public GameObject cam;
     private int index = 0;
     private int transitionIndex = 0;
     private bool inTransition = false;
@@ -88,7 +87,7 @@ public class BackgroundManager : MonoBehaviour
     // Method that checks if a given background coincides completely with the current camera position
     private bool CoincidesWithCamera(GameObject background) {
         GameObject g = GetLinker(background);
-        float dist = cam.transform.position.x - g.transform.position.x;
+        float dist = 0 - g.transform.position.x;
         return (dist <= 0.1 && dist >= -0.1);
     }
 
