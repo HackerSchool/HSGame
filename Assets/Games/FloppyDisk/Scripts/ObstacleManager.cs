@@ -32,9 +32,9 @@ public class ObstacleManager : MonoBehaviour
     {
         //calculates position of obstacle and instantiates it
         obstacleIndex++;
-        Vector3 positionBottom = new Vector3(xSpawn, -5, 0);
-        Vector3 positionTop = new Vector3(xSpawn, 5, 0);
-        //TODO: scale of obstacles
+        Vector3 randomGen = new Vector3(0, Random.Range(-1.4f, 2.1f), 0);
+        Vector3 positionBottom = new Vector3(xSpawn, -5, 0) + randomGen;
+        Vector3 positionTop = new Vector3(xSpawn, 5, 0) + randomGen;
         GameObject currentBottom = Instantiate(obstaclePrefab, positionBottom, transform.rotation);
         GameObject currentTop = Instantiate(obstaclePrefab, positionTop, transform.rotation);
 
