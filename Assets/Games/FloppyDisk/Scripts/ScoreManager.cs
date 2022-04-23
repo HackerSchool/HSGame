@@ -13,7 +13,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     //Increases the score when a player collides with a ScoreZone collider
-    private void OnTriggerEnter2D(Collider2D other){
+    private void OnTriggerExit2D(Collider2D other){
         score = score + 1;
         scoreText.text = "Score: " + score.ToString("");
     }
