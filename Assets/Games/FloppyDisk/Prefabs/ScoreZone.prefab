@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 174306214550709412}
   - component: {fileID: -8854453916474300548}
   - component: {fileID: -1634556632404893926}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ScoreZone
   m_TagString: ScoreZone
   m_Icon: {fileID: 0}
@@ -158,4 +158,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43dc4f3337a3674419d9b4cd0b1f4d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
+  scoreText: {fileID: 0}
