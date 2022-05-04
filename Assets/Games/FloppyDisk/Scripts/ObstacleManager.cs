@@ -5,57 +5,65 @@ using UnityEngine;
 public class ObstacleManager : MonoBehaviour
 {
     public GameObject obstaclePrefab;
+    public GameObject scorezonePrefab;
     List<GameObject> obstacles = new List<GameObject>();
-    GameObject obstacleManager;
+
     float xSpawn = 15f;
     int obstacleIndex = 0;
 
-    // Runs before the start and will assign the game object so we can get the parents position
-    void Awake()
-    {
-        obstacleManager = GameObject.Find("ObstacleManager");
-    }
     //Spawns first obstacle
     void Start()
     {
-        SpawnObstacle(new Vector3(0, 0, 0));
+        //Coroutine to spawn obstacles each 1.5 seconds
+        StartCoroutine(ExecuteSpawnObstacle());
     }
 
-    void LateUpdate()
+    IEnumerator ExecuteSpawnObstacle()
     {
-        SpawnObstacle(obstacleManager.transform.parent.transform.position);
-    }
-
-    void SpawnObstacle(Vector3 currentPosition)
-    {
-        if ((int)System.Math.Floor(currentPosition.x) / 10 > this.obstacleIndex - 1)
+        //Spawns initial obstacle
+        SpawnObstacle();
+        while (true)
         {
-            //calculates position of obstacle and instantiates it
-            obstacleIndex++;
-            Vector3 positionBottom = new Vector3(currentPosition.x + xSpawn, -5, 0);
-            Vector3 positionTop = new Vector3(currentPosition.x + xSpawn, 5, 0);
-            //TODO: scale of obstacles
-            GameObject currentBottom = Instantiate(obstaclePrefab, positionBottom, transform.rotation);
-            GameObject currentTop = Instantiate(obstaclePrefab, positionTop, transform.rotation);
+            //Spawns new obstacle after 1.5 seconds
+            yield return new WaitForSeconds(1.5f);
+            SpawnObstacle();
+        }
+    }
 
-            //adds obstacle to list until the max of 4 pairs and then starts to replace them
-            if (obstacleIndex < 4)
-            {
-                obstacles.Add(currentBottom);
-                obstacles.Add(currentTop);
-            }
-            else
-            {
-                //destroys the oldest pair of obstacles
-                Destroy(obstacles[0]);
-                Destroy(obstacles[1]);
-                obstacles.RemoveAt(0);
-                obstacles.RemoveAt(0);
+    void SpawnObstacle()
+    {
+        //calculates position of obstacle and instantiates it
+        obstacleIndex++;
+        Vector3 randomGen = new Vector3(0, Random.Range(-1.4f, 2.1f), 0);
+        Vector3 positionBottom = new Vector3(xSpawn, -5, 0) + randomGen;
+        Vector3 positionTop = new Vector3(xSpawn, 5, 0) + randomGen;
+        Vector3 scoreZone = new Vector3(xSpawn, 0, 0) + randomGen;
+        GameObject currentBottom = Instantiate(obstaclePrefab, positionBottom, transform.rotation);
+        GameObject currentTop = Instantiate(obstaclePrefab, positionTop, transform.rotation);      
+        GameObject currentScoreZone = Instantiate(scorezonePrefab, scoreZone, transform.rotation);         
 
-                //adds the newest pair of obstacles
-                obstacles.Add(currentBottom);
-                obstacles.Add(currentTop);
-            }
+        //adds obstacle to list until the max of 4 pairs and then starts to replace them
+        //also adds a ScoreZone
+        if (obstacleIndex < 5)
+        {
+            obstacles.Add(currentBottom);
+            obstacles.Add(currentTop);
+            obstacles.Add(currentScoreZone);         
+        }
+        else
+        {
+            //destroys the oldest pair of obstacles and the oldest ScoreZone
+            Destroy(obstacles[0]);
+            Destroy(obstacles[1]);
+            Destroy(obstacles[2]);                   
+            obstacles.RemoveAt(0);                
+            obstacles.RemoveAt(0);
+            obstacles.RemoveAt(0);               
+            
+            //adds the newest pair of obstacles and a ScoreZone
+            obstacles.Add(currentBottom);
+            obstacles.Add(currentTop);
+            obstacles.Add(currentScoreZone);         
         }
     }
 }

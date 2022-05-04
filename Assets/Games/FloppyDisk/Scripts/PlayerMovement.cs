@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rigidbodyComponent;
+    public Animator animator;
 
     void Start()
     {
@@ -13,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-
+        animator.SetFloat("speedY", rigidbodyComponent.velocity.y);
     }
 
     void OnJump(InputValue value)

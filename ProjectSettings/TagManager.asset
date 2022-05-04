@@ -6,15 +6,16 @@ TagManager:
   tags:
   - Obstacle
   - Floor
+  - ScoreZone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Floor
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Score
   - 
   - 
   - 
