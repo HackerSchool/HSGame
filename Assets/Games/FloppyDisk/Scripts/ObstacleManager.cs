@@ -11,6 +11,8 @@ public class ObstacleManager : MonoBehaviour
     float xSpawn = 15f;
     int obstacleIndex = 0;
 
+    bool applyEffects = false;
+
     //Spawns first obstacle
     void Start()
     {
@@ -42,6 +44,12 @@ public class ObstacleManager : MonoBehaviour
         GameObject currentTop = Instantiate(obstaclePrefab, positionTop, transform.rotation);      
         GameObject currentScoreZone = Instantiate(scorezonePrefab, scoreZone, transform.rotation);         
 
+        if(applyEffects) {
+            currentBottom.GetComponent<ObstacleEffects>().Activate();
+            currentTop.GetComponent<ObstacleEffects>().Activate();
+        }
+
+
         //adds obstacle to list until the max of 4 pairs and then starts to replace them
         //also adds a ScoreZone
         if (obstacleIndex < 5)
@@ -65,5 +73,21 @@ public class ObstacleManager : MonoBehaviour
             obstacles.Add(currentTop);
             obstacles.Add(currentScoreZone);         
         }
+    }
+
+    public void InvisibleObjects() {
+        for(int i = 0; i < obstacles.Count; i++)
+        {
+            obstacles[i].GetComponent<ObstacleEffects>().Activate();
+        }
+        applyEffects = true;
+    }
+
+    public void VisibleObjects() {
+        for(int i = 0; i < obstacles.Count; i++)
+        {
+            obstacles[i].GetComponent<ObstacleEffects>().Deactivate();
+        }
+        applyEffects = false;
     }
 }

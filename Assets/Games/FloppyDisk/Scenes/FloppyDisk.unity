@@ -377,7 +377,7 @@ Transform:
   m_GameObject: {fileID: 1105240801}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.9387, y: 2.0125, z: 0}
-  m_LocalScale: {x: 0.32307795, y: 0.34171078, z: 1}
+  m_LocalScale: {x: 0.3230779, y: 0.3417108, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -425,6 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1105240808}
+  darkness: {fileID: 5444948581477849132, guid: e83553fae2b7421418629671c19039ed, type: 3}
 --- !u!50 &1105240806
 Rigidbody2D:
   serializedVersion: 4
@@ -731,8 +732,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -1450435725
-  m_SortingOrder: 4
+  m_SortingLayerID: -1331046449
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1817670090
 RectTransform:
@@ -858,6 +859,81 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2104326966
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2104326967}
+  - component: {fileID: 2104326968}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2104326967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104326966}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2104326968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104326966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e162d02a004472b4c99f14bf0486e152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
+  darkness: {fileID: 0}
+  activateObstacleInvisibilty:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2011606646}
+        m_TargetAssemblyTypeName: ObstacleManager, Assembly-CSharp
+        m_MethodName: InvisibleObjects
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  deactivateObstacleInvisibilty:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2011606646}
+        m_TargetAssemblyTypeName: ObstacleManager, Assembly-CSharp
+        m_MethodName: VisibleObjects
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &7671019837939490131
 PrefabInstance:
   m_ObjectHideFlags: 0
