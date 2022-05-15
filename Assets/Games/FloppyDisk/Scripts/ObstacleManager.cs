@@ -7,7 +7,7 @@ public class ObstacleManager : MonoBehaviour
     public GameObject obstaclePrefab;
     public GameObject scorezonePrefab;
     List<GameObject> obstacles = new List<GameObject>();
-
+    
     float xSpawn = 15f;
     int obstacleIndex = 0;
 
@@ -90,4 +90,43 @@ public class ObstacleManager : MonoBehaviour
         }
         applyEffects = false;
     }
+    //Dash method, called when atDash event is detected. Calls Dashed method in ObstacleMovement for every Obstacle on the scene
+    public void Dash(){
+
+        int n = 0;
+        int p = obstacles.Count;
+        
+        while (n<p){
+            obstacles[n].GetComponent<ObstacleMovement>().Dashed();
+            n++;
+        }
+
+    }
+
+    //Pull method, called when atPull event is detected
+    //finds the first obstacle that has a x position greater than the player's position
+    //then gives the y position of the ScoreZone (previous obstacle + 2 in the list) and gives it to the player
+    public void Pull(){
+        GameObject player = GameObject.Find("Player");
+
+        float playerX = player.transform.position.x;
+        float obstacleX = 0;
+        float pullY = 0;
+
+        int n = 0;
+        int p = obstacles.Count;
+        
+        while (n<p){
+            obstacleX = obstacles[n].transform.position.x;
+            if (obstacleX-playerX>=0){
+                pullY = obstacles[n+2].transform.position.y;
+                n = 20;
+            }
+            n++;
+        }
+
+
+        player.transform.position = new Vector3(-4,pullY,0);
+    }
+
 }
