@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rigidbodyComponent;
     public Animator animator;
-
     public GameObject darkness;
+    public UnityEvent GameOver;
 
     void Start()
     {
@@ -29,17 +30,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.tag == "Obstacle" || other.gameObject.tag == "Floor")
         {
-            Debug.Log("Game Over");
-            QuitGame();
+            GameOver.Invoke();
         }
-    }
-
-    public void QuitGame()
-    {
-        #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-        #endif
-        Application.Quit();
     }
 
 }

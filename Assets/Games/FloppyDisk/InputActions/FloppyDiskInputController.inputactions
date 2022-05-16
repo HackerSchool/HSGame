@@ -604,6 +604,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "StartMenu",
+            "id": "04188ecb-3c0c-4e77-afd0-8ab328416646",
+            "actions": [
+                {
+                    "name": "Start",
+                    "type": "Button",
+                    "id": "0ae2d3ff-cfcc-4373-b857-0292e2efde75",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "77166dc6-4038-42eb-9740-f803aeb2d61f",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

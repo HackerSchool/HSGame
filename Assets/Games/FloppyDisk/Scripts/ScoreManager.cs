@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    static int score = 0;
+    public static int score = 0;
     public Text scoreText;
 
     void Start(){
@@ -16,6 +16,10 @@ public class ScoreManager : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other){
         score = score + 1;
         scoreText.text = "Score: " + score.ToString("");
+    }
+
+    public string GetScore() {
+        return score.ToString();
     }
 
 }
