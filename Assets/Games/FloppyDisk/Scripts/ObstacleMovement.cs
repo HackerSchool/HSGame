@@ -5,12 +5,14 @@ using UnityEngine;
 public class ObstacleMovement : MonoBehaviour
 {
     public float obstacleSpeed = 5;
-    public float obstacleSpeedFast = 150;
+    public float obstacleSpeedFast = 10;
 
     bool dashing = false;
-    float timer = 0;
+    //float timer = 0f;
+    float position = 0f;
 
     Rigidbody2D rigidbodyComponent;
+
 
     void Start()
     {
@@ -22,6 +24,7 @@ public class ObstacleMovement : MonoBehaviour
     public void Dashed(){
 
         rigidbodyComponent.velocity = Vector2.left * obstacleSpeedFast;
+        position = rigidbodyComponent.transform.position.x;
 
         dashing = true;
     }
@@ -30,10 +33,8 @@ public class ObstacleMovement : MonoBehaviour
     // Counter to reset speed after dash ends
     void Update(){
         if (dashing){
-            timer += Time.deltaTime;
-            if (timer>=0.5f){
+            if (rigidbodyComponent.transform.position.x <= (position-5f)){
                 rigidbodyComponent.velocity = Vector2.left * obstacleSpeed;
-                timer = 0;
                 dashing = false;
             }
         }
