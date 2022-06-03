@@ -6,16 +6,23 @@ public class ObstacleManager : MonoBehaviour
 {
     public GameObject obstaclePrefab;
     public GameObject scorezonePrefab;
+    public GameObject floor;
+    public GameObject ceil;
     List<GameObject> obstacles = new List<GameObject>();
-    
+    float timer = 0.0f;
+    bool dashing = false;
     float xSpawn = 15f;
     int obstacleIndex = 0;
+    float spawnRate = 2.5f;
 
     bool applyEffects = false;
 
     //Spawns first obstacle
     void Start()
     {
+        floor = GameObject.Find("Floor");
+        ceil = GameObject.Find("Ceiling");
+
         //Coroutine to spawn obstacles each 1.5 seconds
         StartCoroutine(ExecuteSpawnObstacle());
     }
@@ -27,52 +34,50 @@ public class ObstacleManager : MonoBehaviour
         while (true)
         {
             //Spawns new obstacle after 1.5 seconds
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(spawnRate);
+            int rand = Random.Range(1, 100);
             SpawnObstacle();
         }
     }
 
     void SpawnObstacle()
     {
+        float yScaleBottom = Random.Range(1.0f, 2.7f);
+        float yScaleTop = Random.Range(1.0f, 2.7f);
+
+        float floorSpawn = floor.transform.position.y + yScaleBottom / 2 + 0.5f;
+        float ceilSpawn = ceil.transform.position.y - yScaleTop / 2 - 0.5f;
+
         //calculates position of obstacle and instantiates it
         obstacleIndex++;
-        Vector3 randomGen = new Vector3(0, Random.Range(-1.4f, 2.1f), 0);
-        Vector3 positionBottom = new Vector3(xSpawn, -5, 0) + randomGen;
-        Vector3 positionTop = new Vector3(xSpawn, 5, 0) + randomGen;
-        Vector3 scoreZone = new Vector3(xSpawn, 0, 0) + randomGen;
-        GameObject currentBottom = Instantiate(obstaclePrefab, positionBottom, transform.rotation);
-        GameObject currentTop = Instantiate(obstaclePrefab, positionTop, transform.rotation);      
+        Vector3 positionBottom = new Vector3(xSpawn, floorSpawn, 0);
+        Vector3 positionTop = new Vector3(xSpawn, ceilSpawn, 0);
+        Vector3 scoreZone = new Vector3(xSpawn, (ceilSpawn+floorSpawn)/2, 0);
+        GameObject currentBottom = Instantiate(obstaclePrefab);
+        GameObject currentTop = Instantiate(obstaclePrefab, positionTop, transform.rotation);
+        currentBottom.transform.localScale = new Vector3(1, yScaleBottom, 1);
+        currentBottom.transform.position = positionBottom;
+        currentTop.transform.localScale = new Vector3(1, yScaleTop, 1);
+        currentTop.transform.position = positionTop;
+
         GameObject currentScoreZone = Instantiate(scorezonePrefab, scoreZone, transform.rotation);         
 
         if(applyEffects) {
             currentBottom.GetComponent<ObstacleEffects>().Activate();
             currentTop.GetComponent<ObstacleEffects>().Activate();
         }
-
-
-        //adds obstacle to list until the max of 4 pairs and then starts to replace them
-        //also adds a ScoreZone
-        if (obstacleIndex < 5)
-        {
-            obstacles.Add(currentBottom);
-            obstacles.Add(currentTop);
-            obstacles.Add(currentScoreZone);         
+       
+        obstacles.Add(currentBottom);
+        obstacles.Add(currentTop);
+        obstacles.Add(currentScoreZone);         
+        
+        if(obstacles[0] == null) {
+            obstacles.RemoveRange(0, Mathf.Min(3, obstacles.Count)); 
         }
-        else
-        {
-            //destroys the oldest pair of obstacles and the oldest ScoreZone
-            Destroy(obstacles[0]);
-            Destroy(obstacles[1]);
-            Destroy(obstacles[2]);                   
-            obstacles.RemoveAt(0);                
-            obstacles.RemoveAt(0);
-            obstacles.RemoveAt(0);               
-            
-            //adds the newest pair of obstacles and a ScoreZone
-            obstacles.Add(currentBottom);
-            obstacles.Add(currentTop);
-            obstacles.Add(currentScoreZone);         
-        }
+
+        //TO REMOVE
+        spawnRate -= Time.deltaTime * 10;
+        spawnRate = Mathf.Max(1.0f, spawnRate);    
     }
 
     public void InvisibleObjects() {
@@ -100,7 +105,6 @@ public class ObstacleManager : MonoBehaviour
             obstacles[n].GetComponent<ObstacleMovement>().Dashed();
             n++;
         }
-
     }
 
     //Pull method, called when atPull event is detected
@@ -129,4 +133,6 @@ public class ObstacleManager : MonoBehaviour
         player.transform.position = new Vector3(-4,pullY,0);
     }
 
+    void Update() {
+    }
 }

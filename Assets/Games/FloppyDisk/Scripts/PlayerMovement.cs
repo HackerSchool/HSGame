@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rigidbodyComponent;
     public Animator animator;
-    public GameObject darkness;
     public UnityEvent GameOver;
 
     void Start()

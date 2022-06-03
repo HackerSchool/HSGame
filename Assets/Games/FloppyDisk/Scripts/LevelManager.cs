@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 
 public class LevelManager : MonoBehaviour
 {
-    public int score;
     public GameObject darkness;
     public GameObject gameStartMenu;
     public GameObject GameOverMenuPrefab;
@@ -35,8 +34,9 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void Darkness() {
+    void OnDarkness() {
         GameObject.Instantiate(darkness);
+        darkness.GetComponent<Darkness>().SetDuration(5.0f);
     }
 
     void DisappearingObstacles() {
@@ -55,6 +55,7 @@ public class LevelManager : MonoBehaviour
 
     public void ResetGame() {
         Time.timeScale = 1;
+        GameObject.Find("Score").GetComponent<ScoreManager>().ResetStore();
         SceneManager.LoadScene("FloppyDisk");
     }
 

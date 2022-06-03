@@ -22,4 +22,8 @@ public class ScoreManager : MonoBehaviour
         return score.ToString();
     }
 
+    public void ResetStore() {
+        score = 0;
+    }
+
 }

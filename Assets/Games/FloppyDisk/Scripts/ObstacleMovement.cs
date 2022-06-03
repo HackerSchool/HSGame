@@ -38,4 +38,12 @@ public class ObstacleMovement : MonoBehaviour
             }
         }
     }
+
+    void OnBecameInvisible()
+    {
+        if(gameObject.transform.position.x < 0) {
+            //gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+    }
 }
