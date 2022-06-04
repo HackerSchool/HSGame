@@ -98,11 +98,17 @@ public class ObstacleManager : MonoBehaviour
     //Dash method, called when atDash event is detected. Calls Dashed method in ObstacleMovement for every Obstacle on the scene
     public void Dash(){
 
+        GameObject obstacle;
+        
+
         int n = 0;
         int p = obstacles.Count;
         
         while (n<p){
-            obstacles[n].GetComponent<ObstacleMovement>().Dashed();
+            obstacle = obstacles[n];
+            if (obstacles[n]!=null){
+                obstacles[n].GetComponent<ObstacleMovement>().Dashed();
+            }
             n++;
         }
     }
@@ -119,12 +125,17 @@ public class ObstacleManager : MonoBehaviour
 
         int n = 0;
         int p = obstacles.Count;
+
+        GameObject obstacle;
         
         while (n<p){
-            obstacleX = obstacles[n].transform.position.x;
-            if (obstacleX-playerX>=0){
-                pullY = obstacles[n+2].transform.position.y;
-                n = 20;
+            obstacle = obstacles[n];
+            if (obstacle!=null){
+                obstacleX = obstacles[n].transform.position.x;
+                if (obstacleX-playerX>=0){
+                    pullY = obstacles[n+2].transform.position.y;
+                    n = 20;
+                }
             }
             n++;
         }

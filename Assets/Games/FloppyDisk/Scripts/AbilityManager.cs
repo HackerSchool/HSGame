@@ -47,12 +47,10 @@ public class AbilityManager : MonoBehaviour
     }
 
     public void ZoneTwo(){
-        Debug.Log("called");
         abilityUnlockText.text = ("Electrical Dash unlocked!\nPress Q to dash forward");
         coolDownUnlock = 10f;
         abilityOneText.text = ("Q");
         abilityControl = 1;
-        Debug.LogFormat("cont = {0}", abilityControl);
     }
 
     public void ZoneThree(){
@@ -60,7 +58,6 @@ public class AbilityManager : MonoBehaviour
         coolDownUnlock = 10f;
         abilityTwoText.text = ("W");
         abilityControl = 2;
-        Debug.LogFormat("cont = {0}", abilityControl);
     }
 
     public void ZoneFour(){
@@ -68,7 +65,6 @@ public class AbilityManager : MonoBehaviour
         coolDownUnlock = 10f;
         abilityThreeText.text = ("E");
         abilityControl = 3;
-        Debug.LogFormat("cont = {0}", abilityControl);
     }
 
     //onDash input, begins atDash event
