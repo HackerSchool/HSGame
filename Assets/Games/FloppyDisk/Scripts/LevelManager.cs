@@ -7,9 +7,12 @@ using UnityEngine.InputSystem;
 
 public class LevelManager : MonoBehaviour
 {
+    public int score;
+    public int level;
     public GameObject darkness;
     public GameObject gameStartMenu;
     public GameObject GameOverMenuPrefab;
+    public GameObject Boss;
     public UnityEvent activateObstacleInvisibilty;
     public UnityEvent deactivateObstacleInvisibilty;
 
@@ -17,14 +20,22 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 0;
+        level = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        int score = int.Parse(GameObject.Find("Score").GetComponent<ScoreManager>().GetScore());
+        if(level == 1 && score == 0) {
+            gameObject.GetComponent<Level1>().StartLevel();
+        }
     }
 
+
+    /*******************************************************************/
+    /*                       OTHER FUNCTIONS                           */
+    /*******************************************************************/
     void OnStart(InputValue value)
     {
         if(gameStartMenu != null) {

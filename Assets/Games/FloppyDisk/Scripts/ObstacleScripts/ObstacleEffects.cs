@@ -10,10 +10,6 @@ public class ObstacleEffects : MonoBehaviour
     private float timer = 0.0f;
     private bool activated = false;
     // Start is called before the first frame update
-    void Start()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
 
     // Update is called once per frame
     void Update()

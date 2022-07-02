@@ -31,6 +31,10 @@ public class PlayerMovement : MonoBehaviour
         {
             GameOver.Invoke();
         }
+        else if (other.gameObject.tag == "Ceilling")
+        {
+            rigidbodyComponent.velocity -= rigidbodyComponent.velocity * Vector2.down;
+        }
     }
 
 }

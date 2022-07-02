@@ -5,79 +5,55 @@ using UnityEngine;
 public class ObstacleManager : MonoBehaviour
 {
     public GameObject obstaclePrefab;
-    public GameObject scorezonePrefab;
-    public GameObject floor;
-    public GameObject ceil;
+    
+    public float maxHeight;
+    public float minHeight;
     List<GameObject> obstacles = new List<GameObject>();
     float timer = 0.0f;
     bool dashing = false;
     float xSpawn = 15f;
     int obstacleIndex = 0;
-    float spawnRate = 2.5f;
-
+    float spawnRate = 1.3f;
     bool applyEffects = false;
+    IEnumerator spawnRoutine = null;
 
     //Spawns first obstacle
     void Start()
     {
-        floor = GameObject.Find("Floor");
-        ceil = GameObject.Find("Ceiling");
-
         //Coroutine to spawn obstacles each 1.5 seconds
-        StartCoroutine(ExecuteSpawnObstacle());
+        spawnRoutine = ExecuteSpawnObstacle();
+        StartCoroutine(spawnRoutine);
+    }
+
+    void Update() {
     }
 
     IEnumerator ExecuteSpawnObstacle()
     {
-        //Spawns initial obstacle
-        SpawnObstacle();
         while (true)
         {
-            //Spawns new obstacle after 1.5 seconds
-            yield return new WaitForSeconds(spawnRate);
-            int rand = Random.Range(1, 100);
             SpawnObstacle();
+            yield return new WaitForSeconds(spawnRate);
         }
     }
 
     void SpawnObstacle()
     {
-        float yScaleBottom = Random.Range(1.0f, 2.7f);
-        float yScaleTop = Random.Range(1.0f, 2.7f);
-
-        float floorSpawn = floor.transform.position.y + yScaleBottom / 2 + 0.5f;
-        float ceilSpawn = ceil.transform.position.y - yScaleTop / 2 - 0.5f;
 
         //calculates position of obstacle and instantiates it
         obstacleIndex++;
-        Vector3 positionBottom = new Vector3(xSpawn, floorSpawn, 0);
-        Vector3 positionTop = new Vector3(xSpawn, ceilSpawn, 0);
-        Vector3 scoreZone = new Vector3(xSpawn, (ceilSpawn+floorSpawn)/2, 0);
-        GameObject currentBottom = Instantiate(obstaclePrefab);
-        GameObject currentTop = Instantiate(obstaclePrefab, positionTop, transform.rotation);
-        currentBottom.transform.localScale = new Vector3(1, yScaleBottom, 1);
-        currentBottom.transform.position = positionBottom;
-        currentTop.transform.localScale = new Vector3(1, yScaleTop, 1);
-        currentTop.transform.position = positionTop;
-
-        GameObject currentScoreZone = Instantiate(scorezonePrefab, scoreZone, transform.rotation);         
+        Vector3 obstaclePosition = new Vector3(xSpawn, Random.Range(minHeight, maxHeight), 0);
+        GameObject obstacle = Instantiate(obstaclePrefab, obstaclePosition, transform.rotation);      
 
         if(applyEffects) {
-            currentBottom.GetComponent<ObstacleEffects>().Activate();
-            currentTop.GetComponent<ObstacleEffects>().Activate();
+            obstacle.GetComponent<ObstacleEffects>().Activate();
         }
        
-        obstacles.Add(currentBottom);
-        obstacles.Add(currentTop);
-        obstacles.Add(currentScoreZone);         
+        obstacles.Add(obstacle);    
         
         if(obstacles[0] == null) {
-            obstacles.RemoveRange(0, Mathf.Min(3, obstacles.Count)); 
-        }
-
-        //TO REMOVE
-        spawnRate -= Time.deltaTime * 10;
-        spawnRate = Mathf.Max(1.0f, spawnRate);    
+            obstacles.RemoveAt(0); 
+        } 
     }
 
     public void InvisibleObjects() {
@@ -144,6 +120,26 @@ public class ObstacleManager : MonoBehaviour
         player.transform.position = new Vector3(-4,pullY,0);
     }
 
-    void Update() {
+    public bool NoObjects() {
+        if(obstacles.Count != 0 && obstacles[obstacles.Count - 1] == null) {
+            obstacles.Clear();
+        }
+        return obstacles.Count == 0;
+    }
+
+    public void SpawnRandomObstacle(float y_pos) {
+        GameObject obstacle = Instantiate(obstaclePrefab);
+        Vector3 pos = obstacle.transform.position;
+        pos.y = y_pos;
+        pos.x = xSpawn;
+        obstacle.transform.position = pos;
+        obstacle.transform.localScale = new Vector3(1.0f, 2.0f, 1.0f);
+    }
+
+    public void Activate() {
+        StartCoroutine(spawnRoutine);
+    }
+    public void Deactivate() {
+        StopCoroutine(spawnRoutine);
     }
 }

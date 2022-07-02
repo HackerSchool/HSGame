@@ -5,12 +5,13 @@ using TMPro;
 
 public class GameOverMenu : MonoBehaviour
 {
-    public GameObject scoreText;
+    [SerializeField] GameObject scoreText;
+    [SerializeField] IntVariable score;
 
     // Start is called before the first frame update
     void Start()
     {
-        scoreText.GetComponent<TextMeshProUGUI>().text += GameObject.Find("Score").GetComponent<ScoreManager>().GetScore();
+        scoreText.GetComponent<TextMeshProUGUI>().text += score.value;
     }
 
     // Update is called once per frame

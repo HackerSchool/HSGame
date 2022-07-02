@@ -9,11 +9,13 @@ public class Parallax : MonoBehaviour
     public float speed;
     public float parallaxEffect;
     public bool resetOn;
+    Vector3 originalPosition;
 
     // Start is called before the first frame update
     void Start()
     {   
         length = GetComponent<SpriteRenderer>().bounds.size.x;
+        originalPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -22,7 +24,7 @@ public class Parallax : MonoBehaviour
         transform.position += Vector3.right * speed * parallaxEffect * Time.deltaTime;
 
         if(-transform.position.x >= length && resetOn) {
-            transform.position = Vector3.zero;
+            transform.position = originalPosition;
         }
     }
 }

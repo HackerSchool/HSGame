@@ -8,30 +8,30 @@ public class ObstacleMovement : MonoBehaviour
     public float obstacleSpeedFast = 10;
 
     bool dashing = false;
+
+    bool rotating = false;
     //float timer = 0f;
     float position = 0f;
+
+    float angle = 0.0f;
 
     Rigidbody2D rigidbodyComponent;
 
 
     void Start()
     {
-        rigidbodyComponent = GetComponent<Rigidbody2D>();
-        rigidbodyComponent.velocity = Vector2.left * obstacleSpeed;
     }
 
     //Dashed method, called by Dash method on ObstacleManager, changes speed of obstacle.
     public void Dashed(){
-
-        rigidbodyComponent.velocity = Vector2.left * obstacleSpeedFast;
-        position = rigidbodyComponent.transform.position.x;
-
+        transform.position += Vector3.left * obstacleSpeedFast * Time.deltaTime;
         dashing = true;
     }
 
     // Update is called once per frame
     // Counter to reset speed after dash ends
     void Update(){
+        transform.position += Vector3.left * obstacleSpeed * Time.deltaTime;
         if (dashing){
             if (rigidbodyComponent.transform.position.x <= (position-5f)){
                 rigidbodyComponent.velocity = Vector2.left * obstacleSpeed;
@@ -40,10 +40,13 @@ public class ObstacleMovement : MonoBehaviour
         }
     }
 
+    public void Rotate() {
+        rotating = true;
+    }
+
     void OnBecameInvisible()
     {
         if(gameObject.transform.position.x < 0) {
-            //gameObject.SetActive(false);
             Destroy(gameObject);
         }
     }
